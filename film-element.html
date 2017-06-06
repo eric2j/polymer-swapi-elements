@@ -41,7 +41,7 @@
             handleResponse: function (data) {
                 this.film = data.detail.response;
             },
-            selected: (e) => {
+            selected: function(e) {
                 console.log("Film Selection : ", e.currentTarget.id);
                 this.fire('selected', e.currentTarget.id);
             }
