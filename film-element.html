@@ -1,0 +1,50 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../paper-styles/color.html">
+<link rel="import" href="../paper-styles/typography.html">
+
+<dom-module id="film-element">
+    <template>
+        <paper-card on-click="selected" id="{{id}}" heading="{{film.title}}" image="http://placehold.it/200x100/FFC107/000000?text=%20">
+            <div class="card-content">
+                {{film.episode_id}} - {{film.director}} - {{film.release_date}} - {{film.producer}}
+            </div>
+        </paper-card>
+
+        <iron-ajax
+                auto="true"
+                id="requestRepos"
+                url="http://swapi.co/api/films/{{id}}"
+                handle-as="json"
+                on-response="handleResponse"
+        >
+        </iron-ajax>
+    </template>
+
+    <style type="text/css">
+    paper-card {
+        width:200px;
+    }
+    </style>
+    <script>
+        Polymer({
+            is: 'film-element',
+            properties: {
+                current: String,
+                id: String,
+                film: {}
+            },
+            ready: function () {
+                this.$.requestRepos.generateRequest();
+            },
+            handleResponse: function (data) {
+                this.film = data.detail.response;
+            },
+            selected: (e) => {
+                console.log("Film Selection : ", e.currentTarget.id);
+                this.fire('selected', e.currentTarget.id);
+            }
+        });
+    </script>
+</dom-module>

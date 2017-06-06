@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script>
+        /*
+         window.Polymer = window.Polymer || {};
+         window.Polymer.dom = 'shadow';
+         */
+    </script>
+    <link rel="import" href="../people-element.html">
+    <link rel="import" href="../film-element.html"/>
+    <link rel="import" href="../film-people.html"/>
+    <style type="text/css">
+        body {
+            font-family: 'Roboto', 'Noto', sans-serif;
+            font-size: 14px;
+            margin: 0;
+            padding: 24px;
+            background-color: #fafafa;
+        }
+    </style>
+</head>
+<body>
+<h1>People</h1>
+<people-element id="1"></people-element>
+<film-people id="0"></film-people>
+
+<h1>Film</h1>
+<film-element id="1"></film-element>
+
+<script>
+    document.querySelector('people-element').addEventListener('selected', function myFunc(event) {
+        console.log("demo :",event.detail);
+//        var sp =  document.getElementById('resFunc2');
+//        sp.innerText = event.detail;
+        document.querySelector('person-element').id = event.detail;
+    });    
+    document.querySelector('film-people').addEventListener('selected', function myFunc(event) {
+        console.log("film-people :",event.detail);
+//        var sp =  document.getElementById('resFunc2');
+//        sp.innerText = event.detail;
+        //document.querySelector('person-element').id = event.detail;
+    });
+</script>
+</body>
+</html>

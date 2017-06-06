@@ -1,0 +1,45 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../paper-styles/color.html">
+<link rel="import" href="../paper-styles/typography.html">
+<link rel="import" href="people-element.html">
+
+<dom-module id="film-people">
+    <template>
+        <template is="dom-repeat" items="[[people]]">
+            <people-element id="{{item}}"></people-element>
+        </template>
+
+        <iron-ajax
+                id="requestRepos"
+                url="http://swapi.co/api/films/{{id}}"
+                handle-as="json"
+                on-response="handleResponse">
+        </iron-ajax>
+    </template>
+    <style type="text/css">
+    </style>
+    <script>
+        Polymer({
+            is: 'film-people',
+            properties: {
+                people: {
+                    type: Array
+                }
+            },
+            ready: function () {
+                this.$.requestRepos.generateRequest();
+            },
+            handleResponse: function (data) {
+                console.log(data.detail.response);
+                let characters = data.detail.response.characters.map(e=>e.split('/')[5]);
+                console.log(characters);
+                this.people = characters;
+            },
+            select: function (e) {
+                console.log(e.currentTarget.id);
+                //this.fire('selected', e.currentTarget.id);
+            }
+        });
+    </script>
+</dom-module>
